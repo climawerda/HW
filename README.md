@@ -53,3 +53,51 @@ gzip -d Homo_sapiens.GRCh38.108.gff3.gz
 tabix -p gff Homo_sapiens.GRCh38.108.sorted.gff3.gz
 
 [1] Select and download BED files for three ChIP-seq and one ATAC-seq experiment from the ENCODE (use one tissue/cell line). Sort, bgzip, and index them using tabix.
+#ChIP-seq
+wget -O AHR.bigBed "https://www.encodeproject.org/files/ENCFF334MKW/@@download/ENCFF334MKW.bigBed"
+wget -O CLOCK.bigBed "https://www.encodeproject.org/files/ENCFF748BNP/@@download/ENCFF748BNP.bigBed"
+wget -O NEUROD1.bigBed "https://www.encodeproject.org/files/ENCFF954FLR/@@download/ENCFF954FLR.bigBed"
+#ATAC-seq
+wget -O ATAC.bigBed "https://www.encodeproject.org/files/ENCFF995VVW/@@download/ENCFF995VVW.bigBed"
+
+# Переводим файлы в более удобный формат
+wget http://hgdownload.cse.ucsc.edu/admin/exe/linux.x86_64/bigBedToBed
+chmod a+x bigBedToBed
+./bigBedToBed "AHR.bigBed" "AHR.bed"
+./bigBedToBed "CLOCK.bigBed" "CLOCK.bed"
+./bigBedToBed "NEUROD1.bigBed" "NEUROD1.bed"
+./bigBedToBed "ATAC.bigBed" "ATAC.bed"
+
+#Удаляю 'chr' из файлов
+sed 's/chr//' AHR.bed > AHR_1.bed
+sed 's/chr//' CLOCK.bed > CLOCK_1.bed
+sed 's/chr//' NEUROD1.bed > NEUROD1_1.bed
+sed 's/chr//' ATAC.bed > ATAC_1.bed
+
+# Сортирую
+sort -n -k2 AHR_1.bed -o AHR_sort.bed
+sort -n -k2 CLOCK_1.bed -o CLOCK_sort.bed
+sort -n -k2 NEIROD1_1.bed -o NEUROD1_sort.bed
+sort -n -k2 ATAC_1.bed -o ATAC_sort.bed
+
+# Запаковываю
+bgzip -c AHR_sort.bed > AHR_sort.bed.gz
+bgzip -c CLOCK_sort.bed > CLOCK_sort.bed.gz
+bgzip -c NEUROD1_sort.bed > NEUROD1_sort.bed.gz
+bgzip -c ATAC_sort.bed > ATAC_sort.bed.gz
+
+# Индексирую
+tabix -p bed AHR_sort_bed.gz
+tabix -p bed CLOCK_sort_bed.gz
+tabix -p bed NEUROD1_sort_bed.gz
+tabix -p bed ATAC_sort_bed.gz
+
+[1] Download and install JBrowse 2. Create a new jbrowse repository in /mnt/JBrowse/ (or some other folder).
+Скачала и учтановила. Репрозиторий создала.
+
+[0.25] Install nginx and amend its config(/etc/nginx/nginx.conf) to contain the following section:
+# Дополнила файл через vim
+![image](https://user-images.githubusercontent.com/119702267/209327407-851ad135-1abb-465e-875e-fed5996edc6e.png)
+
+[0.25] Restart the nginx (reload its config) and make sure that you can access the browser using a link like this: http://64.129.58.13/jbrowse/. Here 64.129.58.13 is your public IP address.
+[1] Add your files to the genome browser and verify that everything works as intended. Don't forget to index the genome annotation, so you could later search by gene names.
