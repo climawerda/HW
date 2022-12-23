@@ -20,11 +20,16 @@ Anaconda:
 [0.25] Export the environment (example) to the file and verify that it can be rebuilt from the file without problems.
 Прикрепляю скрин своего env файла
 ![image](https://user-images.githubusercontent.com/119702267/209340508-320cf452-802b-49b3-a0f0-1eb501f99fb1.png)
+
 [3] Create a Dockerfile for a container with all required dependencies. Don't forget about comments; test that all tools are accessible and work inside the container. Hints:
 If needed, grant rights to execute downloaded/compiled binaries using chmod (chmod a+x BINARY_NAME)
 Move all executables to $PATH folders (e.g./usr/local/bin) to make them accessible without specifying the full path.
 Typical command to run a container interactively (-it) and delete on exit(--rm): docker run --rm -it name:tag
+
 [1] Use hadolint and remove as many reported warnings as possible.
+
 [0.5] Add relevant labels, e.g. maintainer, version, etc. (hint)
+
 Скачала и установила Docker в соответствии с инструкцией на сайте, создала Dockerfile.
 Сам Dockerfile прикрепила в github.
+
