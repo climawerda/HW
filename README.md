@@ -26,18 +26,30 @@ Generate SSH key pair and use it to connect to your server.
 Создала вируальную машину: IP 95.163.180.207, ID 2f40ac9e-cb57-41c0-a94f-2fc6d53540db
 [1] Download the latest human genome assembly (GRCh38) from the Ensemble FTP server (fasta, GFF3). 
 Index the fasta using samtools (samtools faidx) and GFF3 using tabix.
+
 #Загружаю
+
 wget https://ftp.ensembl.org/pub/release-108/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.primary_assembly.fa.gz
+
 wget https://ftp.ensembl.org/pub/release-108/gff3/homo_sapiens/Homo_sapiens.GRCh38.108.gff3.gz
 
 #Индексирую fasta с помощью samtools
+
 sudo apt-get install samtools
+
 gzip -d Homo_sapiens.GRCh38.dna.primary_assembly.fa.gz
+
 samtools faidx Homo_sapiens.GRCh38.dna.primary_assembly.fa
 
+
 #Индексирую GFF3 с помощью tabix
+
 sudo apt-get install tabix
+
 gzip -d Homo_sapiens.GRCh38.108.gff3.gz
+
 (grep "^#" Homo_sapiens.GRCh38.108.gff3; grep -v "^#" Homo_sapiens.GRCh38.108.gff3 | sort -t"`printf '\t'`" -k1,1 -k4,4n) | bgzip > Homo_sapiens.GRCh38.108.sorted.gff3.gz
+
 tabix -p gff Homo_sapiens.GRCh38.108.sorted.gff3.gz
+
 [1] Select and download BED files for three ChIP-seq and one ATAC-seq experiment from the ENCODE (use one tissue/cell line). Sort, bgzip, and index them using tabix.
