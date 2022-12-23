@@ -1,14 +1,15 @@
+#Подключаю среду
 FROM ubuntu:22.04
-# Update and install necessary packages
+# FastQC
+#Устанавливаю необходимые библиотеки и обновления
 RUN apt-get update && apt-get upgrade -y \
   && apt-get install -y wget unzip default-jdk libfindbin-libs-perl
 
-# Install the application
+# Устанавливаю приложение
 RUN wget https://www.bioinformatics.babraham.ac.uk/projects/fastqc/fastqc_v0.11.9.zip \
     && unzip fastqc_v0.11.9.zip \
     && rm fastqc_v0.11.9.zip \
     && chmod 755 /FastQC/fastqc
-# Use environment variable to add executable to PATH
 ENV PATH "/FastQC:$PATH"
 
 # STAR 
@@ -84,8 +85,8 @@ RUN cd /docker_main / && \
 #MultiQC 
 ENV MultiQC v.1.13
 RUN apt-get update && apt-get install -y python3 python3-pip
-# Add the MultiQC source files to the container
+# Добавляю файлы
 ADD . /usr/src/multiqc
 WORKDIR /usr/src/multiqc
-# Install MultiQC
+# Устанавливаю
 RUN pip install multiqc
