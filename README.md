@@ -97,7 +97,7 @@ tabix -p bed ATAC_sort_bed.gz
 
 [0.25] Install nginx and amend its config(/etc/nginx/nginx.conf) to contain the following section:
 # Дополнила файл через vim
-![image](https://user-images.githubusercontent.com/119702267/209327407-851ad135-1abb-465e-875e-fed5996edc6e.png)
+![image](https://user-images.githubusercontent.com/119702267/209338830-da2c4f7b-96c2-4a9e-956e-8b7e355c512f.png)
 
 [0.25] Restart the nginx (reload its config) and make sure that you can access the browser using a link like this: http://64.129.58.13/jbrowse/. Here 64.129.58.13 is your public IP address.
 [1] Add your files to the genome browser and verify that everything works as intended. Don't forget to index the genome annotation, so you could later search by gene names.
