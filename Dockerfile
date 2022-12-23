@@ -1,6 +1,9 @@
 # Задаю базовый образ
 FROM ubuntu:22.04
 
+# Labels
+LABEL maintainer="Makarenko Vasilisa"
+LABEL version="first and last"
 
 # FastQC
 # Установка необходимых пакетов
